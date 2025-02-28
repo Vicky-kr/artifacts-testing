@@ -44,7 +44,9 @@ jobs:
         run: |
           git config --global user.name "Vicky-kr"
           git config --global user.email "Biki-Kumar.BikiKumar@shell.com"
-          if git diff --quiet && git diff --staged --quiet: then echo "No changes detected. Skipping commit and push." exit 0
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No changes detected. Skipping commit and push."
+            exit 0
           fi
           git add .
           git commit -m "Auto generated test file"

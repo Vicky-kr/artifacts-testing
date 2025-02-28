@@ -17,12 +17,17 @@ jobs:
       - name: Run Python script to generate file
         run: |
           python app.py
-      - name: Upload generated file as artifact
+      - name: Upload generated input file as artifact
         uses: actions/upload-artifact@v4.6.1
         with:
           name: generated-files
           path: |
             test/input.json
+      - name: Upload generated output file as artifact
+        uses: actions/upload-artifact@v4.6.1
+        with:
+          name: generated-files
+          path: |
             test/output.xml
       - name: Print Confirmation message
         run: echo "Files have been successfully uploaded to the artifact store."

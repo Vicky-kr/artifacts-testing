@@ -20,13 +20,6 @@ jobs:
       - name: Run Python script to generate file
         run: |
           python app.py
-      - name: Commit and push the Generated file
-        run: |
-          git config --global user.name "Vicky-kr"
-          git config --global user.email "Biki-Kumar.BikiKumar@shell.com"
-          git add .
-          git commit -m "Auto generated test file"
-          git push origin $branch
       - name: Upload generated input file as artifact
         uses: actions/upload-artifact@v4.6.1
         with:
@@ -47,5 +40,12 @@ jobs:
           name: output.xml
           path: |
             test/output.xml
+      - name: Commit and push the Generated file
+        run: |
+          git config --global user.name "Vicky-kr"
+          git config --global user.email "Biki-Kumar.BikiKumar@shell.com"
+          git add .
+          git commit -m "Auto generated test file"
+          git push origin $branch
       - name: Print Confirmation message
         run: echo "Files have been successfully uploaded to the artifact store."

@@ -1,0 +1,4 @@
+with open('test/input.json','w') as file:
+  file.write('{"status_code":"1000"}')
+with open('test/output.xml','w') as file:
+  file.write('<status_code>1000</status_code>')

@@ -44,13 +44,12 @@ jobs:
         run: |
           git config --global user.name "Vicky-kr"
           git config --global user.email "Biki-Kumar.BikiKumar@shell.com"
-          git checkout main
-          git pull origin main
+          git pull origin $branch_name
           git checkout -b test/auto-test-generation
           git add .
           git commit -m "Auto generated test file"
           git push origin test/auto-test-generation
-          gh pr create --title "Automated Update" --body "This PR adds the latest files" --base main --head "test/auto-test-generation"
+          gh pr create --title "Automated Update" --body "This PR adds the latest files" --base $branch_name --head "test/auto-test-generation"
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_TOKEN }}
       - name: Print Confirmation message

@@ -21,8 +21,8 @@ jobs:
           python app.py
       - name: Commit and push the Generated file
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "Vicky-kr"
+          git config --global user.email "Biki-Kumar.BikiKumar@shell.com"
           git add .
           git commit -m "Auto generated file"
           git push origin main

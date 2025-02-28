@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
 jobs:
   generate-file:
     runs-on: ubuntu-latest
@@ -19,13 +20,11 @@ jobs:
           python app.py
       - name: Commit and push the Generated file
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "Vicky-kr"
+          git config --global user.email "Biki-Kumar.BikiKumar@shell.com"
           git add .
           git commit -m "Auto generated file"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_TOKEN }}
+          git push origin $branch
       - name: Upload generated input file as artifact
         uses: actions/upload-artifact@v4.6.1
         with:

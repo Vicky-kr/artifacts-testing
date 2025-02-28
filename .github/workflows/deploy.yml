@@ -45,6 +45,8 @@ jobs:
           git checkout -b test/auto-test-generation
           git add .
           git commit -m "Auto generated test file"
+          git config --global user.name "Vicky-kr"
+          git config --global user.email "Biki-Kumar.BikiKumar@shell.com"
           git push origin test/auto-test-generation
           gh pr create --title "Automated Update" --body "This PR adds the latest files" --base main --head
         env:

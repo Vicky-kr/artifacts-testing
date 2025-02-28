@@ -44,6 +44,8 @@ jobs:
         run: |
           git config --global user.name "Vicky-kr"
           git config --global user.email "Biki-Kumar.BikiKumar@shell.com"
+          git checkout main
+          git pull origin main
           git checkout -b test/auto-test-generation
           git add .
           git commit -m "Auto generated test file"

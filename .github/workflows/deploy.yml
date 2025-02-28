@@ -40,12 +40,14 @@ jobs:
           name: output.xml
           path: |
             test/output.xml
-      - name: Commit and push the Generated file
+      - name: Push to new branch and create pull request
         run: |
-          git config --global user.name "Vicky-kr"
-          git config --global user.email "Biki-Kumar.BikiKumar@shell.com"
+          git checkout -b test/auto-test-generation
           git add .
           git commit -m "Auto generated test file"
-          git push origin $branch
+          git push origin test/auto-test-generation
+          gh pr create --title "Automated Update" --body "This PR adds the latest files" --base main --head
+        env:
+          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_TOKEN }}
       - name: Print Confirmation message
         run: echo "Files have been successfully uploaded to the artifact store."

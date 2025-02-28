@@ -17,6 +17,15 @@ jobs:
       - name: Run Python script to generate file
         run: |
           python app.py
+      - name: Commit and push the Generated file
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add test/input.json
+          git commit -m "Auto generated file"
+          git push origin ${{ github.head_ref || github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_TOKEN }}
       - name: Upload generated input file as artifact
         uses: actions/upload-artifact@v4.6.1
         with:

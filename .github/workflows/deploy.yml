@@ -1,0 +1,28 @@
+name: CI/CD Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  generate-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - name: Run Python script to generate file
+        run: |
+          python app.py
+      - name: Upload generated file as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: generated-files
+          path: |
+            test/input.json
+            test/output.xml
+      - name: Print Confirmation message
+        run: echo "Files have been successfully uploaded to the artifact store."

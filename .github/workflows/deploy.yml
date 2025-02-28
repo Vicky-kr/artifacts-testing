@@ -4,12 +4,15 @@ on:
   push:
     branches:
       - main
+      - develop
 jobs:
   generate-file:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
+        with:
+          token: ${{ secrets.SECRET_GITHUB_TOKEN }}
       - name: Set up Python
         uses: actions/setup-python@v5.4.0
         with:
@@ -19,13 +22,11 @@ jobs:
           python app.py
       - name: Commit and push the Generated file
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add test/input.json
-          git commit -m "Auto generated file"
-          git push origin ${{ github.head_ref || github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_TOKEN }}
+          git config --global user.name "Vicky-kr"
+          git config --global user.email "Biki-Kumar.BikiKumar@shell.com"
+          git add .
+          git commit -m "Auto generated test file"
+          git push origin $branch
       - name: Upload generated input file as artifact
         uses: actions/upload-artifact@v4.6.1
         with:

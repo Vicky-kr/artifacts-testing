@@ -28,6 +28,9 @@ jobs:
         with:
           name: input.json
           path: ./test
+      - name: Run Python script to generate output file
+        run: |
+          python test.py
       - name: Upload generated output file as artifact
         uses: actions/upload-artifact@v4.6.1
         with:

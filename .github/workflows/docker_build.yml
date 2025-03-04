@@ -24,7 +24,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Print the outputs of previous steps
       run: |
-          echo "${{ steps.login-ecr.outputs.registry }}"
+          echo "${{ github.ref_protected == true && github.ref_name || 'branch' }}-latest"
     - name: Build and push Docker images
       uses: docker/build-push-action@v5
       with:

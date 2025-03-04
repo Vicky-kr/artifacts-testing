@@ -1,0 +1,39 @@
+name: "Build Docker Image"
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials from Ops account
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: arn:aws:iam::057021017975:role/emob-github-role-datalake
+        aws-region: eu-west-1
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+      with:
+        mask-password: 'true'
+
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v5
+      with:
+        push: true
+        file: ./Dockerfile
+        tags: |
+          ${{ steps.login-ecr.outputs.registry }}/emob-datalake-databricks:latest
+          ${{ steps.login-ecr.outputs.registry }}/emob-datalake-databricks:${{ github.sha }}

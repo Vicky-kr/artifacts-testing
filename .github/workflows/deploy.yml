@@ -50,7 +50,7 @@ jobs:
       #     fi
       - name: Workflow deployment (assets only upload)
         run: |
-            git getch origin ${{ github.event.pull_request.base.ref }} --depth=1
+            git fetch origin ${{ github.event.pull_request.base.ref }} --depth=1
             git diff --name-only origin/${{ github.event.pull_request.base.ref }}
 
       # - name: Push to new branch and create pull request

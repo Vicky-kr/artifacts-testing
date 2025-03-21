@@ -50,8 +50,14 @@ jobs:
       #     fi
       - name: Workflow deployment (assets only upload)
         run: |
-            git fetch origin ${{ github.event.pull_request.base.ref }} --depth=1
-            git diff --name-only origin/${{ github.event.pull_request.base.ref }}
+          git fetch origin ${{ github.event.pull_request.base.ref }} --depth=1
+          git diff --name-only origin/${{ github.event.pull_request.base.ref }} > changed_files.txt
+          if grep -q 'conf/deployment.yml' changed_files.txt; then
+            echo "has_changes=true"
+          else
+            echo "has_changes=false"
+          fi
+
 
       # - name: Push to new branch and create pull request
       #   run: |

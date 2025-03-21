@@ -38,6 +38,22 @@ jobs:
           name: output.xml
           path: |
             test/output.xml
+      - name: Check changes in conf/deployment.yml
+        id: check_changes
+        run: |
+          # Compare current commit to main branch for changes in conf/deployment.yml
+          git fetch origin main
+          if git diff --quiet HEAD origin/main -- conf/deployment.yml; then
+            echo "No changes detected."
+            echo "::set-output name=changed::false"
+          else
+            echo "Changes detected."
+            echo "::set-output name=changed::true"
+          fi
+      - name: Run deployment
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          echo "Changes detected in deployement.yml file. Deploying application..."
       # - name: Check for changes in deployment.yml
       #   id: check_changes
       #   run: |
@@ -59,12 +75,12 @@ jobs:
       #     fi
 
 
-      - name: Push to new branch and create pull request
-        run: |
-          git config --global user.name "${{ secrets.SECRET_GITHUB_USER_NAME }}"
-          git config --global user.email "${{ secrets.SECRET_GITHUB_USER_EMAIL }}"
-          git diff --quiet && git diff --staged --quiet
-          echo "No changes detected. Skipping commit and push."
+      # - name: Push to new branch and create pull request
+      #   run: |
+      #     git config --global user.name "${{ secrets.SECRET_GITHUB_USER_NAME }}"
+      #     git config --global user.email "${{ secrets.SECRET_GITHUB_USER_EMAIL }}"
+      #     git diff --quiet && git diff --staged --quiet
+      #     echo "No changes detected. Skipping commit and push."
       # exit 0
       #     fi
       #     git add .

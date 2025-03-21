@@ -49,9 +49,9 @@ jobs:
       #       echo "has_changes=false" >> $GITHUB_ENV
       #     fi
       - name: Workflow deployment (assets only upload)
-        if: contains(github.event.head_commit.modified, 'conf/deployment.yml')
         run: |
-          echo "CHANGES DETECTED IN deployment.yml file, THUS RUNNING THIS STEP."
+            git getch origin ${{ github.event.pull_request.base.ref }} --depth=1
+            git diff --name-only origin/${{ github.event.pull_request.base.ref }}
 
       # - name: Push to new branch and create pull request
       #   run: |

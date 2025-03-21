@@ -38,18 +38,18 @@ jobs:
           name: output.xml
           path: |
             test/output.xml
-      - name: Check for changes in deployment.yml
-        id: check_changes
-        run: |
-          git fetch origin main
-          git diff --name-only origin/main HEAD > changed_files.txt
-          if grep -q 'conf/deployment.yml' changed_files.txt; then
-            echo "has_changes=true" >> $GITHUB_ENV
-          else
-            echo "has_changes=false" >> $GITHUB_ENV
-          fi
+      # - name: Check for changes in deployment.yml
+      #   id: check_changes
+      #   run: |
+      #     git fetch origin main
+      #     git diff --name-only origin/main HEAD > changed_files.txt
+      #     if grep -q 'conf/deployment.yml' changed_files.txt; then
+      #       echo "has_changes=true" >> $GITHUB_ENV
+      #     else
+      #       echo "has_changes=false" >> $GITHUB_ENV
+      #     fi
       - name: Workflow deployment (assets only upload)
-        if: env.has_changes == 'true'
+        if: contains(github.event.head_commit.modified, 'conf/deployment.yml')
         run: |
           echo "CHANGES DETECTED IN deployment.yml file, THUS RUNNING THIS STEP."
 
